@@ -1,2 +1,2 @@
 # nextjs-dashboard
-Learning Node JS
+Learning Next JS
