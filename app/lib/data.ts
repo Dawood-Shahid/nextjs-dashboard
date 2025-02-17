@@ -23,7 +23,24 @@ export async function fetchRevenue() {
 
     // console.log('Data fetch completed after 3 seconds.');
 
-    return data;
+    // return data;
+
+    const monthOrder = <Record<string, number>>{
+      Jan: 1,
+      Feb: 2,
+      Mar: 3,
+      Apr: 4,
+      May: 5,
+      Jun: 6,
+      Jul: 7,
+      Aug: 8,
+      Sep: 9,
+      Oct: 10,
+      Nov: 11,
+      Dec: 12,
+    };
+
+    return data.sort((a, b) => monthOrder[a.month] - monthOrder[b.month]);
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch revenue data.');
@@ -88,7 +105,7 @@ export async function fetchCardData() {
 const ITEMS_PER_PAGE = 6;
 export async function fetchFilteredInvoices(
   query: string,
-  currentPage: number,
+  currentPage: number
 ) {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
