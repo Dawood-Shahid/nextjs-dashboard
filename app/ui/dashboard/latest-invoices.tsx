@@ -2,23 +2,16 @@ import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { lusitana } from '@/app/ui/fonts';
-import { LatestInvoice } from '@/app/lib/definitions';
 import { fetchLatestInvoices } from '@/app/lib/data';
+import { formatDateToLocal } from '@/app/lib/utils';
 export default async function LatestInvoices() {
-//   {
-//   latestInvoices,
-// }: {
-//   latestInvoices: LatestInvoice[];
-// }
+  //   {
+  //   latestInvoices,
+  // }: {
+  //   latestInvoices: LatestInvoice[];
+  // }
   const latestInvoices = await fetchLatestInvoices();
 
-  const getInvoiceDate = (date: string) => {
-    const dateObj = new Date(date);
-
-    return `${dateObj.getDate()} ${dateObj.toLocaleString('default', {
-      month: 'short',
-    })} ${dateObj.getFullYear()}`;
-  };
   return (
     <div className='flex w-full flex-col md:col-span-4'>
       <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
@@ -43,9 +36,9 @@ export default async function LatestInvoices() {
                   <Image
                     src={invoice.image_url}
                     alt={`${invoice.name}'s profile picture`}
-                    className='mr-4 rounded-full'
-                    width={32}
-                    height={32}
+                    className='rounded-full mr-4'
+                    width={40}
+                    height={40}
                   />
                   <div className='min-w-max'>
                     <div className='flex items-center'>
@@ -53,7 +46,7 @@ export default async function LatestInvoices() {
                         {invoice.name}
                       </p>
                       <p className='hidden text-[10px] ml-5 text-gray-500 sm:block'>
-                        {getInvoiceDate(invoice.date)}
+                        {formatDateToLocal(invoice.date)}
                       </p>
                     </div>
                     <p className='hidden text-sm text-gray-500 sm:block'>
@@ -62,7 +55,13 @@ export default async function LatestInvoices() {
                   </div>
                 </div>
                 <p
-                  className={`${lusitana.className} truncate text-sm font-medium md:text-base`}
+                  className={clsx(
+                    `${lusitana.className} truncate font-medium text-lg`,
+                    {
+                      'text-red-600': invoice.status === 'pending',
+                      'text-green-600': invoice.status === 'paid',
+                    }
+                  )}
                 >
                   {invoice.amount}
                 </p>
