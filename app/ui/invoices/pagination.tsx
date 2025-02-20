@@ -6,8 +6,10 @@ import Link from 'next/link';
 import { generatePagination } from '@/app/lib/utils';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
+import { unstable_noStore as noStore } from 'next/cache';
 
 export default function Pagination({ totalPages }: { totalPages: number }) {
+  noStore();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
