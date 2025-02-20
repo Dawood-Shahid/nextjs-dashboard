@@ -38,7 +38,7 @@ export default async function Page() {
   // } = cardData;
 
   return (
-    <main>
+    <main className='p-6 md:p-12'>
       <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
         Dashboard
       </h1>

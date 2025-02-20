@@ -30,20 +30,25 @@ export default async function Page({
   const totalPages = await fetchInvoicesPages(query);
 
   return (
-    <div className='w-full'>
-      <div className='flex w-full items-center justify-between'>
+    <div className='w-full flex flex-col h-full py-6 md:py-12'>
+      <div className='w-full items-center justify-between px-6 md:px-12'>
         <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
           Invoices
         </h1>
       </div>
-      <div className='flex items-center justify-between gap-2'>
+      <div className='flex items-center justify-between gap-2 px-6 md:px-12'>
         <Search placeholder='Search invoices...' />
         <CreateInvoice />
       </div>
-      <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-        <Table query={query} currentPage={currentPage} />
-      </Suspense>
-      <div className='mt-5 flex w-full justify-end'>
+      <div className={'my-6 px-6 md:px-12 flex-col flex-1 overflow-auto'}>
+        <Suspense
+          key={query + currentPage}
+          fallback={<InvoicesTableSkeleton />}
+        >
+          <Table query={query} currentPage={currentPage} />
+        </Suspense>
+      </div>
+      <div className='mt-5 flex w-full justify-end px-6 md:px-12'>
         <Pagination totalPages={totalPages} />
       </div>
     </div>
